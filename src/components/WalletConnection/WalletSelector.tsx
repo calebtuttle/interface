@@ -28,10 +28,11 @@ const WalletRow = ({ walletName, walletType }: WalletRowProps) => {
       case WalletType.INJECTED:
         return (
           <img
-            src={`/icons/wallets/browserWallet.svg`}
+            // src={`/icons/wallets/browserWallet.svg`}
+            src={`/icons/wallets/silk.svg`}
             width="24px"
             height="24px"
-            alt={`browser wallet icon`}
+            alt={`silk wallet icon`}
           />
         );
       case WalletType.WALLET_CONNECT:
@@ -75,9 +76,16 @@ const WalletRow = ({ walletName, walletType }: WalletRowProps) => {
     }
   };
 
-  const connectWalletClick = () => {
-    trackEvent(AUTH.CONNECT_WALLET, { walletType: walletType, walletName: walletName });
-    connectWallet(walletType);
+  const connectWalletClick = async () => {
+    try {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      await window.ethereum.login()
+      trackEvent(AUTH.CONNECT_WALLET, { walletType: walletType, walletName: walletName });
+      connectWallet(walletType);  
+    } catch (err) {
+      console.error('Error connecting wallet', err)
+    }
   };
   return (
     <Button
@@ -205,8 +213,10 @@ export const WalletSelector = () => {
       <TxModalTitle title="Connect a wallet" />
       {error && <Warning severity="error">{handleBlocking()}</Warning>}
       <WalletRow
-        key="browser_wallet"
-        walletName="Browser wallet"
+        // key="browser_wallet"
+        // walletName="Browser wallet"
+        key="silk"
+        walletName="Silk"
         walletType={WalletType.INJECTED}
       />
       <WalletRow

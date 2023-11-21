@@ -143,9 +143,6 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
         if (connector instanceof WalletConnectConnector) {
           connector.walletConnectProvider = undefined;
         }
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        await window.ethereum.login();
         await activate(connector, undefined, true);
         setConnector(connector);
         setSwitchNetworkError(undefined);
