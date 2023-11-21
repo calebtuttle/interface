@@ -145,7 +145,7 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
         }
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        await window.ethereum.login()
+        await window.ethereum.login();
         await activate(connector, undefined, true);
         setConnector(connector);
         setSwitchNetworkError(undefined);

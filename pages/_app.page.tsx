@@ -1,8 +1,8 @@
 import '/public/fonts/inter/inter.css';
 import '/src/styles/variables.css';
 
-import { initSilk } from '@silk-wallet/silk-wallet-sdk'
 import { CacheProvider, EmotionCache } from '@emotion/react';
+import { initSilk } from '@silk-wallet/silk-wallet-sdk';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Web3ReactProvider } from '@web3-react/core';
@@ -116,17 +116,19 @@ export default function MyApp(props: MyAppProps) {
   }, [MIXPANEL_TOKEN, initializeMixpanel]);
 
   useEffect(() => {
-    const silk = initSilk()
+    const silk = initSilk();
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    window.ethereum = silk
+    window.ethereum = silk;
     // silk.login()
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    window.ethereum.send = (method: any, params: any) => {
-      return silk.request({ method, params })
-    }
-  }, [])
+    window.ethereum.send =
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (method: any, params: any) => {
+        return silk.request({ method, params });
+      };
+  }, []);
 
   return (
     <CacheProvider value={emotionCache}>
