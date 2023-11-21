@@ -1,6 +1,7 @@
 import '/public/fonts/inter/inter.css';
 import '/src/styles/variables.css';
 
+import { initSilk } from '@silk-wallet/silk-wallet-sdk'
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -113,6 +114,17 @@ export default function MyApp(props: MyAppProps) {
       console.log('no analytics tracking');
     }
   }, [MIXPANEL_TOKEN, initializeMixpanel]);
+
+  useEffect(() => {
+    const silk = initSilk()
+    // @ts-ignore
+    window.ethereum = silk
+    // silk.login()
+    // @ts-ignore
+    window.ethereum.send = (method: any, params: any) => {
+      return silk.request({ method, params })
+    }
+  }, [])
 
   return (
     <CacheProvider value={emotionCache}>
