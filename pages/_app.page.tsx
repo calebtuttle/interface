@@ -117,9 +117,11 @@ export default function MyApp(props: MyAppProps) {
 
   useEffect(() => {
     const silk = initSilk()
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     window.ethereum = silk
     // silk.login()
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     window.ethereum.send = (method: any, params: any) => {
       return silk.request({ method, params })
